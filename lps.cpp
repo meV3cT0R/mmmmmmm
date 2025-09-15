@@ -6,16 +6,16 @@
 
 using namespace std;
 
-int  fact(int n) {
-    if(n==0 || n==1) return 1;
-    for (int i = n - 1; i > 1; i--) {
-        n *= i;
+int C(int n, int k) {
+    int res = 1;
+    for(int i=1;i<=k;i++) {
+        res = res * (n - i + 1) / i;
     }
-    return n;
+    return (int)(res + 0.01);
 }
 
 double p(int n, double p, int k) {
-    return (fact(n) / (fact(n - k)*fact(k))) * pow(p, k) * pow(1 - p, n - k);
+    return  C(n,k)* pow(p, k) * pow(1 - p, n - k);
 }
 
 bool game(int rolls, int desired_face, int to_win) {
@@ -109,7 +109,7 @@ int main() {
     }
 
     sim(100,5,1);
-    
+
     sim(100,5,1, [](int k,int at_least,double initial_bet) -> tuple<int,int,double> {
         int win = 0;
         int lose = 0;
